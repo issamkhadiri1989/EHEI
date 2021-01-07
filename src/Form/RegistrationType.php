@@ -54,7 +54,6 @@ class RegistrationType extends AbstractType
             ->add('city', ChoiceType::class, [
                 'placeholder' => 'Choose the city',
                 'choices' => [],
-                'mapped' => false,
                 'empty_data' => '',
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $arg) {
