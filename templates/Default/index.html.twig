@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>Welcome to the test</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">
+        Register
+    </button>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    $(function () {
+        $('#registration_country').on('change', function () {
+            /*const url = Routing.generate('cities', {});*/
+            const $country = $(this).val();
+            $.ajax({
+                'url' : '/cities', // To change with Routing.generate later
+                'data' : {
+                    'country' : $country
+                },
+                'type': 'post',
+                'beforeSend' : function() {
+                    $('#registration_city').find('option:not(:first)').remove();
+                },
+                success: function (data) {
+                    $.each(data, function (i, p) {
+                        $('#registration_city').append(new Option(p.name, p.id));
+                    });
+                }
+            });
+
+        });
+    } ());
+</script>
+{% endblock %}

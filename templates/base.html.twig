@@ -7,6 +7,8 @@
     </head>
     <body>
         {% block body %}{% endblock %}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
