@@ -74,7 +74,6 @@ class Sticker
     private $circulationDate;
 
     /**
-     * @Assert\Valid()
      * @ORM\OneToOne(targetEntity=Payment::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -117,9 +116,8 @@ class Sticker
      */
     private $phoneNumbers;
 
-
     /**
-     * @MyValidator\ConstraintUpperCase()
+     * @var string
      */
     private $driverName;
 
@@ -133,6 +131,14 @@ class Sticker
         $this->driverName = $driverName;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDriverName(): string
+    {
+        return $this->driverName;
     }
 
     /**
