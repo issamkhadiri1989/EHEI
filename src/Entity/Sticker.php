@@ -7,6 +7,7 @@ namespace App\Entity;
 //<editor-fold desc="Use statements">
 use App\Repository\StickerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Validator\Constraints as MyValidator;
@@ -16,6 +17,12 @@ use App\Validator\Constraints as MyValidator;
 /**
  * @MyValidator\ConstraintUpperCase()
  * @ORM\Entity(repositoryClass=StickerRepository::class)
+ *
+ * ...
+ * @UniqueEntity(
+ *     fields={"registrationNumber", "year"},
+ *     message="A payment with the registration number has already been processed this year."
+ * )
  */
 class Sticker
 {
@@ -117,22 +124,32 @@ class Sticker
      */
     private $phoneNumbers;
 
-
-    /**
-     * @MyValidator\ConstraintUpperCase()
-     */
     private $driverName;
 
     /**
-     * @param string $driverName The driver full name
-     *
-     * @return Sticker
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="stickers")
+     * @ORM\JoinColumn(nullable=false)
      */
-    public function setDriverName(string $driverName): self
+    private $user;
+
+    /**
+     * @param string|null $driverName The driver full name
+     *
+     * @return Sticker The current Sticker
+     */
+    public function setDriverName(?string $driverName): self
     {
         $this->driverName = $driverName;
 
         return $this;
+    }
+
+    /**
+     * @return string|null The driver's name
+     */
+    public function getDriverName(): ?string
+    {
+        return $this->driverName;
     }
 
     /**
@@ -256,5 +273,17 @@ class Sticker
             'Hybrid',
             'Electric',
         ];
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

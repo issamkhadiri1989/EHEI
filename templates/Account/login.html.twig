@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if hasErrors %}
+        <p>Something wrong has occurred while connecting</p>
+    {% endif %}
+    <form method="post">
+        <div>
+            <label for="email">Email</label>
+            <input type="text"
+                   placeholder="Email address..."
+                   required
+                   name="_username"
+                   value="{{ username }}"
+                   id="email"/>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password"
+                   name="_password"
+                   id="password" required/>
+        </div>
+        <div>
+            <button type="submit">
+                Connect
+            </button>
+        </div>
+    </form>
+{% endblock %}

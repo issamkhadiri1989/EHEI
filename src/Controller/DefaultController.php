@@ -32,7 +32,7 @@ class DefaultController extends AbstractController
     {
         $sticker = new Sticker();
         $sticker
-            ->setDriverName('test')
+            ->setDriverName('TEST')
             ->setRegistrationNumber('51953-A-7')
             ->setCirculationDate(new \DateTime('2009-07-14'))
             ->setFiscalPower(6)
