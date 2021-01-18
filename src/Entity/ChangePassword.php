@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\Validator\Constraints as Security;
 
 class ChangePassword
 {
-    /** @var string */
+    /**
+     * @var string
+     * @Security\UserPassword(message="The old password is not correct")
+     */
     private $oldPassword;
     /**
      * @var string

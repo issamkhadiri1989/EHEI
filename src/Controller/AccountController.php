@@ -139,23 +139,17 @@ class AccountController extends AbstractController
         UserPasswordEncoderInterface $encoder
     ): Response {
         $password = new ChangePassword();
+        /** @var User $user */
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $password);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                if ($encoder->isPasswordValid($user, $password->getOldPassword())) {
-                    //<editor-fold desc="Encrypt the password and  persist to database">
-                    $newHash = $encoder->encodePassword($user, $password->getNewPassword());
-                    $user->setHash($newHash);
-                    $manager->flush();
+                $newHash = $encoder->encodePassword($user, $password->getNewPassword());
+                $user->setHash($newHash);
+                $manager->flush();
 
-                    return $this->redirectToRoute('account_profile');
-                    //</editor-fold>
-                } else {
-                    $form->get('oldPassword')
-                        ->addError(new FormError('The old password not correct'));
-                }
+                return $this->redirectToRoute('account_loggout');
             }
         }
 
