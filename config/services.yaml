@@ -1,19 +1,15 @@
 
 parameters:
     media: '%kernel.project_dir%/public/media'
+    contact: '%kernel.project_dir%/data/contacts.csv'
 
 
 services:
-    #...
-    App\Service\FileUploaderManager:
-        arguments:
-#            $mediaDirectory: '%media%'  <-- This line is no more used
-            $logger: '@monolog.logger.request'
 
     _defaults:
-        #...
         bind:
             $mediaDirectory: '%media%'
+            $contactCsv: '%contact%'
         autowire: true
         autoconfigure: true
 
@@ -26,6 +22,7 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
+            - '../src/Exclude/'
             - '../src/Kernel.php'
             - '../src/Tests/'
 
@@ -37,3 +34,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Exclude\ContactCsv:
+        class: App\Exclude\ContactCsv
+
+    App\Exclude\ContactCsvCache:
+        class: App\Exclude\ContactCsvCache
+        public: false
+        decorates: App\Exclude\ContactCsv
+        arguments:
+            - "@cache.app"
+            - "@App\\Exclude\\ContactCsvCache.inner"
