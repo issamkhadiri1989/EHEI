@@ -33,8 +33,11 @@ services:
 
     App\Service\CsvFileReader:
         tags:
-            - { name: app.file_reader, alias: 'csv'}
+            - { name: app.file_reader, alias: 'csv', priority: 2}
             - { name: app.file_reader, alias: 'txt'}
     App\Service\XmlFileReader:
         tags:
-            - { name: app.file_reader, alias: 'xml' }
+            - { name: app.file_reader, alias: 'xml', priority: 3}
+
+    App\Service\FileReaderCollector:
+        arguments: [!tagged app.file_reader]
