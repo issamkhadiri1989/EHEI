@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -24,6 +25,20 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $admin = new User();
+        $admin->setFirstName('Issam')
+            ->setLastName('Khadiri')
+            ->setEmail('issam@ehei.com')
+            ->setHash($this->encoder->encodePassword($admin, '000000'))
+            ->addUserRole((new Role())->setLabel('ROLE_ADMIN'))
+            ;
+
+        $manager->persist($admin);
+        //...The rest of the fixture
+
+
+
+
         $user = new User();
         $encrypted = $this->encoder
             ->encodePassword($user, 'myPassword');

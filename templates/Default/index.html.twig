@@ -1,22 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {% for error in errors %}
-        <p>{{ error.message }}</p>
-    {% endfor %}
-    {% if app.user %}
-        <a href="{{ path('account_loggout') }}">
-            Logout
-        </a>
-    {% else %}
-        <a href="{{ path('account_registration') }}">
-            Register
-        </a>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-
-        <a href="{{ path('account_login') }}">
-            I have already an account
-        </a>
-    {% endif %}
+    <h1>
+        Welcome to the online portal for sticker payment
+    </h1>
 {% endblock %}
 
 

@@ -30,22 +30,7 @@ class DefaultController extends AbstractController
      */
     public function index(ValidatorInterface $validator): Response
     {
-        $sticker = new Sticker();
-        $sticker
-            ->setDriverName('TEST')
-            ->setRegistrationNumber('51953-A-7')
-            ->setCirculationDate(new \DateTime('2009-07-14'))
-            ->setFiscalPower(6)
-            ->setFuel('Diesel')
-            ->setYear(2019)
-            ->addDriverData('driver_card', '4111111111111111')
-            ->setPhoneNumber('0601020304')
-            ->setPayment((new Payment())->setPrice(750));
-
-        $errors = $validator->validate($sticker);
-
         return $this->render('Default/index.html.twig', [
-            'errors' => $errors,
         ]);
     }
 }

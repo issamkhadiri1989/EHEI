@@ -10,8 +10,8 @@ use App\Form\ChangePasswordType;
 use App\Form\ProfileType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,6 +95,8 @@ class AccountController extends AbstractController
     }
 
     /**
+     * @Security("is_granted('IS_QUIS_AUTHENTICATED_FULLY')")
+     *
      * Edits the profile.
      *
      * @Route("/profile", name="account_profile")

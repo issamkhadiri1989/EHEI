@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+    //<editor-fold desc="Attributes">
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -66,7 +67,14 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Sticker::class, mappedBy="user", orphanRemoval=true)
      */
     private $stickers;
+    //</editor-fold>
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Role::class, cascade={"persist"})
+     */
+    private $userRoles;
+
+    //<editor-fold desc="Other functions">
     /**
      * @return string|null
      */
@@ -86,12 +94,15 @@ class User implements UserInterface
 
         return $this;
     }
+    //</editor-fold>
 
     public function __construct()
     {
         $this->stickers = new ArrayCollection();
+        $this->userRoles = new ArrayCollection();
     }
 
+    //<editor-fold desc="Setters and getters">
     public function getId(): ?int
     {
         return $this->id;
@@ -215,8 +226,7 @@ class User implements UserInterface
             ));
         }
     }
-
-
+    //</editor-fold>
 
     /**
      * Returns the roles granted to the user.
@@ -225,13 +235,16 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        return [
+        $roles = $this->userRoles->map(function (Role $role) {
+            return $role->getLabel();
+        })->toArray();
+
+        return \array_merge([
             'ROLE_USER',
-        ];
+        ], $roles);
     }
 
-
-
+    //<editor-fold desc="Security component methods">
     /**
      * Returns the password used to authenticate the user.
      *
@@ -279,5 +292,30 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+    //</editor-fold>
+
+    /**
+     * @return Collection|Role[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(Role $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(Role $userRole): self
+    {
+        $this->userRoles->removeElement($userRole);
+
+        return $this;
     }
 }
