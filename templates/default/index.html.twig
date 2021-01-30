@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}Hello DefaultController!{% endblock %}
+{% block body %}
+    <table class="table ">
+        <thead>
+        <tr>
+            <th/>
+            <th>Article</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>
+                    {% if article.articleCover is not null %}
+                        <img src="{{ asset('media/' ~ article.articleCover) }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/100">
+                    {% endif %}
+                </td>
+
+                <td>{{ article.title }}</td>
+                <td>{{ article.author.username }}</td>
+                <td>Try to <a href="{{ path('edit_article', {'id' : article.id}) }}">Edit this</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

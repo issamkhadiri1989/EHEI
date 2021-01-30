@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.body }}</p>
+    {% if article.cover %}
+        <img src="{{ asset('media/' ~ article.cover) }}">
+    {% endif %}
+    <blockquote>&mdash; Written by : {{ article.author.username }}</blockquote>
+    <img src="{{ asset('media/' ~ article.articleCover) }}">
+{% endblock %}

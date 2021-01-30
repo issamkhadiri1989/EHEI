@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-success">
+        Save
+    </button>
+    {{ form_end(form) }}
+
+<p>
+    <strong>Logged as : {{ app.user.username }}</strong>
+</p>
+{% endblock %}
