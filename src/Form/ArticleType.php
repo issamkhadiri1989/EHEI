@@ -16,7 +16,6 @@ class ArticleType extends AbstractType
             ->add('cover', FileType::class, [
                 'label' => 'Set the cover',
                 'required' => false,
-                'mapped' => false,
             ])
             ->add('title')
             ->add('body');
