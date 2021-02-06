@@ -6,10 +6,34 @@ namespace App\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class StringExtension extends AbstractExtension
 {
     const MAX = 10;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFunctions()
+    {
+        return [
+            new TwigFunction('tax', [$this, 'computeTaxFunction'])
+        ];
+    }
+
+    /**
+     * Computes the price with tax included.
+     *
+     * @param float $price The input price
+     * @param float $vat The input VAT value
+     *
+     * @return float The price with tax
+     */
+    public function computeTaxFunction(float $price, float $vat = 20): float
+    {
+        return $price * (1 + 0.01 * $vat);
+    }
 
     /**
      * {@inheritDoc}
