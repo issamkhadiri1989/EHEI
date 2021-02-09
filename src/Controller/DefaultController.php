@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Form\CartType;
@@ -16,8 +18,10 @@ class DefaultController extends AbstractController
 {
     /**
      * @Route("/", name="default")
-     * @param ProductRepository $repository
-     * @return Response
+     *
+     * @param ProductRepository $repository The product repository
+     *
+     * @return Response A response instance
      */
     public function index(ProductRepository $repository): Response
     {
@@ -31,14 +35,19 @@ class DefaultController extends AbstractController
     /**
      * @Route("/cart", name="cart")
      *
-     * @param SessionInterface $session
-     * @param CartRepository $repository
-     * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
+     * @param SessionInterface       $session    The session object
+     * @param CartRepository         $repository The cart repository
+     * @param Request                $request    The request instance
+     * @param EntityManagerInterface $manager    A entity manager instance
+     *
+     * @return Response A response instance
      */
-    public function chart(SessionInterface $session, CartRepository $repository, Request $request, EntityManagerInterface $manager): Response
-    {
+    public function chart(
+        SessionInterface $session,
+        CartRepository $repository,
+        Request $request,
+        EntityManagerInterface $manager
+    ): Response {
         $cart = null;
         if ($session->has('CART') === true) {
             $cart = $repository->find($session->get('CART'));

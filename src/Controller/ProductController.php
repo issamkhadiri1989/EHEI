@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Cart;
@@ -19,12 +21,14 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/{slug}", name="product")
      *
-     * @param Product $product The product to be added to the cart
-     * @param Request $request The request object
-     * @param SessionInterface $session
-     * @param CartRepository $repository
-     * @param EntityManagerInterface $manager
-     * @return Response
+     * @param Product                $product    The product to be added to the cart
+     * @param Request                $request    The request object
+     * @param SessionInterface       $session    A session instance
+     * @param CartRepository         $repository The cart repository
+     * @param EntityManagerInterface $manager    The entity manager instance
+     *
+     * @return Response A response instance
+     *
      * @throws \Exception
      */
     public function index(
