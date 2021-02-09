@@ -1,0 +1,84 @@
+{% form_theme form _self %}
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="p-3">
+                <h1>Your cart </h1>
+                <h2>Cart created at {{ cart.createDate|date('c') }}</h2>
+                <h3>Cart created at {{ cart.updateDate|date('c') }}</h3>
+                {{ form_start(form) }}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col" class="text-center">U.P.</th>
+                        <th scope="col" class="text-center">Tot.</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in form.cartLines %}
+                        {{ form_row(row) }}
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"  class="text-left">
+                                 Total
+                            </th>
+                            <th  class="text-center">
+                                <span class="h3"> ${{ cart.total|number_format(2, ',', ' ') }}</span>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="row">
+                    <div class="offset-6">
+                        <a href="{{ path('default') }}" class="btn btn-secondary">
+                            Continue shopping
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="far fa-save"></i> Save changes
+                        </button>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Checkout
+                        </a>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block _cart_cartLines_entry_row %}
+    {% set product = form.vars.value.product %}
+    <tr class="">
+        <th scope="row">{{ product.id }}</th>
+        <td>{{ product.designation }}</td>
+        <td>
+            <div class="form-group form-inline">
+                {{ form_widget(form.quantity, {'attr': {'class': 'form-control col-2'}}) }}
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-danger delete-row">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </td>
+        <td class="text-center">${{ product.unitPrice|number_format(2, ',', ' ') }}</td>
+        <td class="text-center">${{ form.vars.value.total()|number_format(2, ',', ' ') }}</td>
+    </tr>
+{% endblock %}
+{% block javascripts %}
+<script type="text/javascript">
+    (function () {
+        $('button.delete-row').on('click', function () {
+            var $object  = $(this).parents().eq(2);
+            $object.remove();
+        });
+    }())
+</script>
+{% endblock %}

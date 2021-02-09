@@ -1,0 +1,48 @@
+{% form_theme form _self %}
+{% extends 'base.html.twig' %}
+{% block title %}Hello ProductController!{% endblock %}
+{% block body %}
+    {% set success = app.session.flashBag.get('success') %}
+    {% if success|length > 0 %}
+        <div class="alert alert-dismissible alert-success mt-4">
+            {% for label,message in success %}
+                <p class="p-0 m-0">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="p-3">
+        <h1>{{ product.designation }}</h1>
+        <div class="row mt-4">
+            <div class="col-3">
+                <img src="{{ product.image }}" alt="{{ product.designation }}" width="100%"/>
+                <h2 class="h3 badge-info badge">{{ product.category.name }}</h2>
+            </div>
+            <div class="col-6">
+                <p>
+                    {{ product.description }}
+                </p>
+                <h3 class="badge badge-danger h2">
+                    ${{ product.unitPrice|number_format(2, ',', ' ') }}
+                </h3>
+                {{ form_start(form) }}
+                <div class="form-group form-inline">
+                    {{ form_widget(form.quantity, {'attr' : {'class' : 'form-control col-3'}}) }}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                {{ form_errors(form.quantity) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        <div class="alert alert-dismissible alert-danger">
+            {% for error in errors %}
+                <p class="p-0 m-0">{{ error.message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
