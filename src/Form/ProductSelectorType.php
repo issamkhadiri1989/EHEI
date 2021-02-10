@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Entity\Line;
 use App\Form\DataTransformer\ProductTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LineType extends AbstractType
+class ProductSelectorType extends AbstractType
 {
     /**
      * @var ProductTransformer
@@ -25,16 +24,18 @@ class LineType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('product', ProductSelectorType::class)
-            ->add('quantity', TextType::class)
-            ->add('unitPrice', TextType::class);
+        $builder->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Line::class,
+            'invalid_message' => 'The product does not exist',
         ]);
+    }
+
+    public function getParent()
+    {
+        return TextType::class;
     }
 }

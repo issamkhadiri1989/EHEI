@@ -35,7 +35,7 @@ class ProductTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             return '';
         }
 
@@ -57,6 +57,7 @@ class ProductTransformer implements DataTransformerInterface
         }
 
         //find the object using the entity manager
+        /** @var Product|null $product */
         $product = $this->repository->findOneByBarcode($value);
         if (null === $product) {
             $exceptionMessage = \sprintf(
