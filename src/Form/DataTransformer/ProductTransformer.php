@@ -35,7 +35,7 @@ class ProductTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             return '';
         }
 
