@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>ParamConverter</h1>
+    <h2>Doctrine <small class="text-muted">doctrine.orm</small></h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>The route purpose</th>
+            <th>Example</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Fetch object automiatically with ParamConverter</td>
+            <td>
+                <a href="{{ path('view_with_id', {id : 5}) }}">
+                    {{ path('view_with_id', {id : 5}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Fetch object using the findOnBy (slug )</td>
+            <td>
+                <a href="{{ path('view_with_slug', {"slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"}) }}">
+                    {{ path('view_with_slug', {"slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Fetch object ysing the @Entity annotation</td>
+            <td>
+                <a href="{{ path('view_with_entity', {"blog_id": 3}) }}">
+                    {{ path('view_with_entity', {"blog_id": 3}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Fetch object using multiple arguments</td>
+            <td>
+                <a href="{{ path('view_blog_article', {"id" : 3, "article_id": 5}) }}">
+                    {{ path('view_blog_article', {"id" : 3, "article_id": 5}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th colspan="2">Fetch object using Options</th>
+        </tr>
+        <tr>
+            <td>Using "id" option</td>
+            <td>
+                <a href="{{ path('view_article_with_id_option', {"article_id": 5}) }}">
+                    {{ path('view_article_with_id_option', {"article_id": 5}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Using "mapping" option</td>
+            <td>
+                <a href="{{ path('view_with_mapping_option', {
+                    "article_id" : "qui-quia-est-ea-aliquid-sint-suscipit-quia",
+                    "year": 1970,
+                    "blog_slug": "sequi-rem-quo-inventore-consequatur"
+                }) }}">
+                    {{ path('view_with_mapping_option', {
+                        "article_id" : "qui-quia-est-ea-aliquid-sint-suscipit-quia",
+                        "year": 1970,
+                        "blog_slug": "sequi-rem-quo-inventore-consequatur"
+                    }) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Using "exclude" option</td>
+            <td>
+                <a href="{{ path('view_with_exclude', {
+                    "year": 2020,
+                    "slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"
+                }) }}">
+                    {{ path('view_with_exclude', {
+                        "year": 2020,
+                        "slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"
+                    }) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Using "strip_null" option</td>
+            <td>
+                <a href="{{ path('view_with_strip_null', {"year": 2020, "slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"}) }}">
+                    <strong>404
+                        error </strong> {{ path('view_with_strip_null', {"year": 2020, "slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Using "strip_null" option</td>
+            <td>
+                <a href="{{ path('view_with_strip_null', {"slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"}) }}">
+                    <strong>Year is null + mapping on the year :
+                        200 </strong> {{ path('view_with_strip_null', {"year": 2020, "slug": "qui-quia-est-ea-aliquid-sint-suscipit-quia"}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Using "entity_manager" option</td>
+            <td>
+                <strong>No route was created for this example as using multiple managers not seen yet </strong>
+                <a href="#">
+                    {{ path('view_entity_manager', {"id": 3}) }}
+                </a>
+            </td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <div class="mt-4"></div>
+    <h2>Datetime <small class="text-muted">datetime</small></h2>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>The route purpose</th>
+            <th>Example</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Use "yyyy-mm-dd" , "now" , "-Xdays" and time (using strtotime)</td>
+            <td>
+                <a href="{{ path('book', {"from": "2020-01-01", "to": "now"}) }}">
+                    {{ path('book', {"from": "2020-01-01", "to": "now"}) }}
+                </a> <br/>
+                <a href="{{ path('book', {"from": "1420185600", "to": "-2days"}) }}">
+                    {{ path('book', {"from": "1420185600", "to": "-2days"}) }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Convert with specification</td>
+            <td>
+                <a href="{{ path('book_specific_format', {"start": "2020-04-01"}) }}">
+                  <strong>This will generate a 404 error </strong>  {{ path('book_specific_format', {"start": "2020-04-01"}) }}
+                </a><br/>
+                <a href="{{ path('book_specific_format', {"start": "20200401"}) }}">
+                    <strong>But this one will not </strong>  {{ path('book_specific_format', {"start": "20200401"}) }}
+                </a>
+
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}
+{% block stylesheets %}
+    <style type="text/css">
+        th {
+            background: #eee;
+        }
+    </style>
+{% endblock %}
