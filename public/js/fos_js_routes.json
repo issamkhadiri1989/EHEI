@@ -1,0 +1,1 @@
+{"base_url":"","routes":{"testtest":{"tokens":[["text","\/test"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":[],"schemes":[]},"state":{"tokens":[["variable","\/","[^\/]++","country"],["text","\/state"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":[],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":[]}
