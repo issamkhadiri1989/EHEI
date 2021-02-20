@@ -9,7 +9,7 @@
 
 - Loading the users: *php bin/console doctrine:fixtures:load*
 
-- Enjoy
+- Enjoy !
 
 - The file db_name.sql is a dump of an example database. 
 
