@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-3">
+            {{ render(controller('App\\Controller\\DefaultController::categories')) }}
+        </div>
+        <div class="col-9">
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-6">
+                        <div class="card mb-3">
+                            <h3 class="card-header">{{ book.title }}</h3>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{{ path('books_author', {'slug': book.author.slug}) }}">
+                                        {{ book.author.name }}
+                                    </a>
+                                </h5>
+                                <h6 class="card-subtitle text-muted">
+
+                                        {{ book.category.name }}
+                                </h6>
+                            </div>
+                            <img src="{{ book.cover }}"/>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    {{ book.introduction }}
+                                </p>
+                                <small>
+                                    <a href="{{ url('horror_books', {"slug": book.category.slug}) }}">
+                                        See who wrote similar books
+                                    </a>
+                                </small>
+                            </div>
+                            <div class="card-footer text-muted">
+                                {{ book.nbPages }} pages | edition {{ book.edition }}
+                                <strong class="btn btn-success float-right">published on {{ book.pubDate|date('d/m/Y') }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

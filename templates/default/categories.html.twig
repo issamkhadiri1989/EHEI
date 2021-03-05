@@ -1,0 +1,26 @@
+<div class="mb-4">
+    <div class="list-group">
+        <a href="{{ url('default') }}" class="list-group-item list-group-item-action active">
+            Home
+        </a>
+        {% for category in categories %}
+            <a href="{{ url('category', {'slug': category.slug }) }}" class="list-group-item list-group-item-action">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="list-group">
+    <a href="{{ url('rent') }}" class="list-group-item list-group-item-action">
+        All properties
+    </a>
+    <a href="{{ url('specific') }}" class="list-group-item list-group-item-action">
+        Studios & Apartments
+    </a>
+    <a href="{{ url('custom') }}" class="list-group-item list-group-item-action">
+        Find cheap properties
+    </a>
+</div>
+

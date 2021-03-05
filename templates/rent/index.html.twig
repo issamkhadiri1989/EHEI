@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="row">
+            {% for rental in rentals %}
+                <div class="col-6">
+                    <div class="card mb-3">
+                        <h3 class="card-header">{{ rental.title }}</h3>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="">
+                                    {{ rental.owner }}
+                                </a>
+                            </h5>
+                            {#<h6 class="card-subtitle text-muted">{{ book.category.name }}</h6>#}
+                        </div>
+                        <img src="{{ rental.mainCover }}"/>
+                        <div class="card-body">
+                            <p class="card-text">
+                                {{ rental.description }}
+                            </p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ rental.nbRooms }} rooms | Type <span
+                                    class="btn btn-dark">{{ rental.propertyType }}</span>
+                            <strong class="btn btn-success float-right">{{ rental.price|number_format(2, ',', ' ') }}
+                                $</strong>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if count is defined %}
+    <p>
+        <small>Total {{ count }}</small>
+    </p>
+    {% endif %}
+{% endblock %}
