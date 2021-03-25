@@ -1,0 +1,74 @@
+version: "3.4"
+
+services:
+    webserver:
+        build:
+            context: ./docker/webserver
+        container_name: 'ehei_php'
+        #restart: 'always'
+        ports:
+            - "8383:80"
+        networks:
+            ehei:
+                ipv4_address: 192.168.1.103
+        volumes:
+            - .:/usr/share/nginx/html
+    mysql:
+        build: ./docker/mysql
+        container_name: 'ehei_mysql'
+        #command: --default-authentication-plugin=mysql_native_password
+        #restart: 'always'
+        volumes:
+          - ./docker/data/mysql/:/docker/
+        ports:
+            - "8282:3306"
+        environment:
+          MYSQL_ROOT_PASSWORD: tiger
+          MYSQL_DATABASE: docker
+          MYSQL_USER: docker
+          MYSQL_PASSWORD: docker
+        networks:
+            ehei:
+                ipv4_address: 192.168.1.104
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: 'ehei_phpmyadmin'
+        #restart: always
+        ports:
+            - '8787:80'
+        environment:
+            PMA_HOST: mysql
+        networks:
+            ehei:
+                ipv4_address: 192.168.1.105
+
+    phpstan:
+        image: jakzal/phpqa:php7.4
+        container_name: 'ehei_phpstan'
+        working_dir: /usr/share/nginx/html
+        #To make the container always up because this image will analyze the code and exits
+        command: 'sleep 99999d'
+        volumes:
+            - .:/usr/share/nginx/html
+        networks:
+            ehei:
+                ipv4_address: 192.168.1.106
+    mailcatcher:
+        container_name: 'ehei_mailcatcher'
+        networks:
+            ehei:
+                ipv4_address: 192.168.1.107
+
+        image: yappabe/mailcatcher
+        ports:
+            - 1025:1025
+            - 1080:1080
+networks:
+    ehei:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 192.168.1.0/24
+
+volumes:
+    data:

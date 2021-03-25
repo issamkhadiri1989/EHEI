@@ -1,0 +1,8 @@
+{% if featured is not null %}
+    <div class="sidebar-widget image">
+        <h2 class="title">Featured Product</h2>
+        <a href="{{ url('product', {'slug': featured.slug}) }}">
+            <img src="{{ featured.coverImage }}" alt="{{ featured.title }}" width="255" height="270"/>
+        </a>
+    </div>
+{% endif %}

@@ -1,0 +1,13 @@
+<div class="sidebar-widget category">
+    <h2 class="title">Category</h2>
+    <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{{ url('category', {'slug': category.slug}) }}">
+                    {{ category.category }}
+                </a>
+                <span>({{ category.products|length }})</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,14 @@
+<div class="navbar-nav m-auto">
+    <a href="{{ url('homepage') }}" class="nav-item nav-link active">Home</a>
+    {#<a href="product-list.html" class="nav-item nav-link">Products</a>#}
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Explore</a>
+        <div class="dropdown-menu">
+            {% for category in categories %}
+                <a href="{{ url('category', {'slug': category.slug}) }}"
+                   class="dropdown-item">{{ category.category }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{{ url('homepage') }}" class="nav-item nav-link">Contact Us</a>
+</div>
