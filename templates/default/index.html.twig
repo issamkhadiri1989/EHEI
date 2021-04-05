@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <div class="title"><a href="#">{{ product.title }}</a></div>
+                                        <div class="title"><a href="{{ url('product', {'slug': product.slug}) }}">{{ product.title }}</a></div>
                                         <div class="ratting">
                                             {% for i in 0..product.stars|length-1 %}
                                                 {% if product.stars[i] == 1 %}

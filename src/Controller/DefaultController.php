@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Repository\CategoryRepository;
-use App\Repository\ProductRepository;
+use App\Service\Cart;
+use App\Service\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,18 +15,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /**
+     * @var Product
+     */
+    private $productService;
+
+    /**
+     * @var Cart
+     */
+    private $cartService;
+
+    public function __construct(Product $productService, Cart $cartService)
+    {
+        $this->productService = $productService;
+        $this->cartService = $cartService;
+    }
+
+    /**
+     * Displays the home page.
+     *
      * @Route("/", name="homepage")
      *
-     * @param ProductRepository $repository
      * @param Request $request
      *
      * @return Response
      */
-    public function index(ProductRepository $repository, Request $request): Response
+    public function index(Request $request): Response
     {
         $term = $request->query->get('q', null);
-        /*$products = $repository->findAll();*/
-        $products = $repository->search($term);
+        $products = $this->productService->searchProducts($term);
 
         return $this->render('default/index.html.twig', [
             'products' => $products,
@@ -43,6 +60,20 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/main_menu.html.twig', [
             'categories' => $repository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/index", name="all_products")
+     */
+    public function allIndex(): Response
+    {
+        $this->container->get(Cart::class);
+
+        $products = $this->productService->getAllProducts();
+
+        return $this->render('default/index.html.twig', [
+            'products' => $products,
         ]);
     }
 }

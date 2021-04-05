@@ -27,7 +27,13 @@
                     </div>
                     <div class="cart">
                         <i class="fa fa-cart-plus"></i>
-                        <span>(0)</span>
+                        {% if app.session.get('cart') is defined  and app.session.get('cart')  is not null %}
+                            <a href="{{ url('cart_homepage') }}">
+                                <span>({{ app.session.get('cart').cartLines|length }})</span>
+                            </a>
+                        {% else %}
+                            <span>(0)</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>

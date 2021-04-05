@@ -12,14 +12,14 @@ use Faker\Factory;
 
 class AppFixtures extends Fixture
 {
+    const CATEGORIES = 3;
+
+    const PRODUCTS = 15;
+
     /**
      * @var \Faker\Generator
      */
     private $faker;
-
-    const CATEGORIES = 3;
-
-    const PRODUCTS = 15;
 
     public function __construct()
     {
@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
         }
 
         for ($i = 1; $i <= self::PRODUCTS; $i++) {
-            $product  = new Product();
+            $product = new Product();
             /** @var Category $category */
             $category = $this->getReference('CAT'.\rand(1, self::CATEGORIES));
             $product->setCategory($category)

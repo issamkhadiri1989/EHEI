@@ -2,7 +2,7 @@
 return PhpCsFixer\Config::create()
     ->setRules([
         'array_syntax' => ['syntax' => 'short'],
-        'binary_operator_spaces' => ['align_double_arrow' => true, 'align_equals' => true],
+        'binary_operator_spaces' => ['align_double_arrow' => false, 'align_equals' => false],
         'blank_line_after_namespace' => true,
         'braces' => true,
         'class_definition' => true,
@@ -24,7 +24,7 @@ return PhpCsFixer\Config::create()
         'no_trailing_whitespace' => true,
         'no_trailing_whitespace_in_comment' => true,
         'ordered_class_elements' => ['order' => ['use_trait', 'constant_public', 'constant_protected', 'constant_private', 'property_public', 'property_protected', 'property_private', 'construct', 'destruct', 'magic', 'phpunit', 'method_public', 'method_protected', 'method_private']],
-        'ordered_imports' => ['sortAlgorithm' => 'length'],
+        'ordered_imports' => ['sortAlgorithm' => 'alpha'],
         'phpdoc_add_missing_param_annotation' => ['only_untyped' => true],
         'phpdoc_align' => true,
         'single_blank_line_at_eof' => true,

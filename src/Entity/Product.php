@@ -16,6 +16,7 @@ class Product
     const MAX_VOTES = 5;
 
     /**
+     * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -23,48 +24,57 @@ class Product
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
      */
     private $shortDescription;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
      */
     private $content;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $coverImage;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
      * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 
     /**
+     * @var Category|null
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
+     * @var float
      * @ORM\Column(type="float")
      */
     private $price;
 
     /**
+     * @var int
      * @ORM\Column(type="integer", nullable=true)
      */
     private $vote;
 
     /**
+     * @var bool
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $featured;
@@ -182,11 +192,14 @@ class Product
         return $this;
     }
 
-    public function stars()
+    /**
+     * @return array
+     */
+    public function stars(): array
     {
         return \array_merge(
-            \array_fill(0, $this->getVote(), 1),
-            \array_fill($this->getVote()+1, self::MAX_VOTES - $this->getVote(), 0)
+            \array_fill(0, $this->getVote() ?? self::MAX_VOTES, 1),
+            \array_fill($this->getVote() + 1, self::MAX_VOTES - $this->getVote(), 0)
         );
     }
 }

@@ -26,7 +26,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('p');
         $expr = $qb->expr();
-        $orCondition  = $expr->orX(
+        $orCondition = $expr->orX(
             $expr->like('p.title', ':x'),
             $expr->like('p.shortDescription', ':x')
         );

@@ -16,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Category
 {
     /**
+     * @var int
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -23,17 +24,20 @@ class Category
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $category;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
      * @Gedmo\Slug(fields={"category"})
      */
     private $slug;
 
     /**
+     * @var mixed
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category", orphanRemoval=true)
      */
     private $products;

@@ -17,7 +17,7 @@ class ProductController extends AbstractController
      *
      * @Route("/product/{slug}", name="product")
      *
-     * @param Product $product
+     * @param Product           $product
      * @param ProductRepository $repository
      *
      * @return Response
