@@ -35,7 +35,9 @@ class CartController extends AbstractController
      */
     public function cart(): Response
     {
-        return $this->render('cart/index.html.twig');
+        return $this->render('cart/index.html.twig', [
+            'total_incl' => $this->cartService->computeTotalCartAmount(),
+        ]);
     }
 
     /**

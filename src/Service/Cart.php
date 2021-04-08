@@ -18,10 +18,20 @@ class Cart
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var int
+     */
+    private $vat;
+    /**
+     * @var string
+     */
+    private $from;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session, int $vat, string $from)
     {
         $this->session = $session;
+        $this->vat = $vat;
+        $this->from = $from;
     }
 
     /**
@@ -86,6 +96,30 @@ class Cart
     public function isCartEmpty(): bool
     {
         return (!$this->session->has('cart') || $this->session->get('cart') === null);
+    }
+
+    /**
+     * Computes the total amount of the current cart.
+     *
+     * @return float total of the current cart
+     */
+    public function computeTotalCartAmount(): float
+    {
+        if ($this->isCartEmpty() === true) {
+            return 0.0;
+        }
+
+        $total = 0.0;
+
+        /** @var CartEntity $cart */
+        $cart = $this->session->get('cart');
+        /** @var CartLine $item */
+        foreach ($cart->getCartLines() as $item) {
+            $lineTotal = $item->getProduct()->getPrice() * $item->getQuantity();
+            $total += ($lineTotal* (1+(0.01*$this->vat)));
+        }
+
+        return $total;
     }
 
     /**

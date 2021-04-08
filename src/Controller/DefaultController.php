@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Repository\CategoryRepository;
 use App\Service\Cart;
+use App\Service\Mailer;
 use App\Service\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,5 +76,16 @@ class DefaultController extends AbstractController
         return $this->render('default/index.html.twig', [
             'products' => $products,
         ]);
+    }
+
+    /**
+     * @Route("/send-mail", name="send_mail")
+     *
+     * @param Mailer $mailer the service mailer
+     */
+    public function sendMail(Mailer $mailer)
+    {
+        $mailer->sendMail();
+        die;
     }
 }
