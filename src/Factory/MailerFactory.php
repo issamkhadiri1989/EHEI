@@ -9,6 +9,16 @@ use App\Service\Mailer;
 class MailerFactory
 {
     /**
+     * @var int
+     */
+    private $limitProducts;
+
+    public function __construct(int $limitProducts)
+    {
+        $this->limitProducts = $limitProducts;
+    }
+
+    /**
      * Creates the mailer service.
      *
      * @return Mailer the mailer service
@@ -17,6 +27,7 @@ class MailerFactory
     {
         $mailer = new Mailer();
         $mailer->setFrom('some.user@gmail.com');
+        dump($this->limitProducts);
 
         return $mailer;
     }

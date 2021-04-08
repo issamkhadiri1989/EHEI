@@ -6,7 +6,9 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-
+        ## bind globals arguments
+        bind:
+            $limitProducts: 3 #always set the limit to 3
     App\:
         resource: '../src/'
         exclude:
@@ -27,7 +29,7 @@ services:
 
     App\Service\Mailer:
         ## factory with a concrete function ##
-        #factory: 'App\Factory\MailerFactory:createMailer'
+        factory: 'App\Factory\MailerFactory:createMailer'
 
         ## factory with  a static function ##
         #factory: ['App\Factory\MailerFactory', 'alertAdmins']

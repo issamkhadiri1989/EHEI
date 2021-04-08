@@ -24,11 +24,16 @@ class DefaultController extends AbstractController
      * @var Cart
      */
     private $cartService;
+    /**
+     * @var int
+     */
+    private $limitProducts;
 
-    public function __construct(Product $productService, Cart $cartService)
+    public function __construct(Product $productService, Cart $cartService, int $limitProducts)
     {
         $this->productService = $productService;
         $this->cartService = $cartService;
+        $this->limitProducts = $limitProducts;
     }
 
     /**
@@ -43,7 +48,8 @@ class DefaultController extends AbstractController
     public function index(Request $request): Response
     {
         $term = $request->query->get('q', null);
-        $products = $this->productService->searchProducts($term);
+
+        $products = $this->productService->searchProducts($term, $this->limitProducts);
 
         return $this->render('default/index.html.twig', [
             'products' => $products,

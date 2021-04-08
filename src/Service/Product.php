@@ -39,16 +39,17 @@ class Product
      * Performs the search of products.
      *
      * @param string|null $term
+     * @param int         $limit
      *
      * @return mixed
      */
-    public function searchProducts(?string $term)
+    public function searchProducts(?string $term, int $limit)
     {
         $this->logger->info('search_engine', [
             'mot' => $term,
         ]);
 
         return $this->repository
-            ->search($term);
+            ->search($term, $limit);
     }
 }

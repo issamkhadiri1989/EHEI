@@ -19,10 +19,11 @@ class ProductRepository extends ServiceEntityRepository
      * Searches products by a given term either by title or short description.
      *
      * @param string|null $term
+     * @param int         $limit
      *
      * @return mixed
      */
-    public function search(?string $term)
+    public function search(?string $term, int $limit)
     {
         $qb = $this->createQueryBuilder('p');
         $expr = $qb->expr();
@@ -33,6 +34,7 @@ class ProductRepository extends ServiceEntityRepository
 
         return $qb->where($orCondition)
             ->setParameter('x', '%' . $term . '%')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }
