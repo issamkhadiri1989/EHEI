@@ -12,6 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
 {
+    public function __construct(int $limitProducts)
+    {
+    }
+
     /**
      * Displays products by category.
      *

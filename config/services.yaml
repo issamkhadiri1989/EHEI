@@ -1,6 +1,6 @@
 parameters:
     from: '%env(APP_ADMIN)%'
-    vat: 20
+    vat: 14
 
 services:
     _defaults:
@@ -8,7 +8,9 @@ services:
         autoconfigure: true
         ## bind globals arguments
         bind:
-            $limitProducts: 3 #always set the limit to 3
+            $limitProducts: 20 #always set the limit to 3
+            $taxes: '%vat%'
+#            $oracleManager: '@doctrine.orm.customer_entity_manager'
     App\:
         resource: '../src/'
         exclude:
@@ -22,10 +24,16 @@ services:
         tags: ['controller.service_arguments']
 
     App\Service\Cart:
+#        calls:
+#            - method: injectServices
+#              arguments:
+#                  $logger: '@monolog.logger.event'
         arguments:
             $vat: '%vat%'
             $from: '%from%'
 
+    App\Service\Product:
+        lazy: true
 
     App\Service\Mailer:
         ## factory with a concrete function ##

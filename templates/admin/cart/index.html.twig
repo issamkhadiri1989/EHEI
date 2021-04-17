@@ -1,0 +1,52 @@
+{% extends 'admin.html.twig' %}
+{% block breadcrumb %}
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="m-0">Cart</h1>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Carts list </h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Infos</th>
+                            <th/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for cart in carts %}
+                            <tr>
+                                <td>{{ cart.id }}</td>
+                                <td>
+                                    <strong>{{ cart.firstName~' '~cart.lastName }}</strong><br/>
+                                    {{ cart.address }}<br/>
+                                    {{ cart.state }} {{ cart.city }} {{ cart.zipCode }}<br/>
+                                    {{ cart.country }}
+                                    {{ cart.phone }}<br/>
+
+                                    <small>{{ cart.createdAt|date('c') }}</small>
+                                </td>
+                                <td>
+                                    <a href="{{ url('admin_cart_view', {id: cart.id}) }}">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

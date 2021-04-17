@@ -5,3 +5,8 @@ twig:
     exception_controller: null
     globals:
         vat: '%vat%'
+        tiny_api_id: '%env(APP_TINY_ID)%'
+    form_themes:
+        - 'form/shipping_type.html.twig'
+#        - 'bootstrap_4_layout.html.twig'
+        - 'form/select_quantity_type.html.twig'

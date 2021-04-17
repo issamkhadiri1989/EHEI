@@ -1,0 +1,66 @@
+{% block shipping_type_row %}
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.firstName) }}
+                {{ form_widget(form.firstName, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.lastName) }}
+                {{ form_widget(form.lastName, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.phone) }}
+                {{ form_widget(form.phone, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                {{ form_label(form.address) }}
+                {{ form_widget(form.address, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.country) }}
+                {{ form_widget(form.country, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.state) }}
+                {{ form_widget(form.state, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                {{ form_label(form.zipCode,) }}
+                {{ form_widget(form.zipCode, {'attr' : {'class' : 'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

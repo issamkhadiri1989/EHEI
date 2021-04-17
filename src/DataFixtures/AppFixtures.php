@@ -47,14 +47,14 @@ class AppFixtures extends Fixture
             $product->setCategory($category)
                 ->setVote(\rand(1, 5))
                 ->setTitle($this->faker->sentence)
-                ->setPrice($this->faker->randomFloat(2, 1000, 25000))
+                ->setPrice($this->faker->randomFloat(2, 1000, 9999))
                 ->setShortDescription($this->faker->paragraph())
                 ->setContent(\sprintf(
                     '<p>%s</p>',
                     \implode('</p><p>', $this->faker->paragraphs(10))
                 ))
                 ->setCoverImage(\sprintf(
-                    'https://picsum.photos/200/300?random=%d',
+                    'https://picsum.photos/200?random=%d',
                     \rand(1, 99999)
                 ));
             $manager->persist($product);

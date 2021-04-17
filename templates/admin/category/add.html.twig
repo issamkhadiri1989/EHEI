@@ -1,0 +1,36 @@
+{% extends 'admin.html.twig' %}
+{% block body %}
+    <h1>Category</h1>
+    {{ form_start(form, {'attr': {'id': 'MyForm'}}) }}
+    <div class="row">
+        <div class="col-6">
+            {{ form_label(form.category) }}
+            {{ form_widget(form.category, {
+                'attr' : {
+                    'class' : 'form-control',
+                    'placeholder': 'Category name'
+                }
+            }) }}
+            {{ form_help(form.category) }}
+        </div>
+        <div class="col-6">
+            {{ form_errors(form.category) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary">
+                Save
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#MyForm").validate();
+    });
+</script>
+{% endblock %}

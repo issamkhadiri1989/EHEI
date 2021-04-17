@@ -1,108 +1,116 @@
+{% form_theme form _self %}
 {% extends 'base.html.twig' %}
 {% block title %}Cart{% endblock %}
 {% block body %}
     <div class="cart-page">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>
-                        <a href="{{ url('cart_clear') }}" class="btn btn-danger">
-                            <i class="fa fa-trash"></i>
-                            Clear cart
-                        </a>
-                    </p>
-                </div>
+        {% if form.cartLines|length == 0 %}
+            <div class="alert alert-warning">
+                The cart is empty
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                                <th>Remove</th>
-                            </tr>
-                            </thead>
-                            <tbody class="align-middle">
-                            <tr>
-                                <td><a href="#"><img src="img/product-1.png" alt="Image"></a></td>
-                                <td><a href="#">Product Name</a></td>
-                                <td>$22</td>
-                                <td>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>$22</td>
-                                <td>
-                                    <button><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#"><img src="img/product-2.png" alt="Image"></a></td>
-                                <td><a href="#">Product Name</a></td>
-                                <td>$22</td>
-                                <td>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>$22</td>
-                                <td>
-                                    <button><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#"><img src="img/product-3.png" alt="Image"></a></td>
-                                <td><a href="#">Product Name</a></td>
-                                <td>$22</td>
-                                <td>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>$22</td>
-                                <td>
-                                    <button><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+        {% else %}
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>
+                            <a href="{{ url('cart_clear') }}" class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                                Clear cart
+                            </a>
+                        </p>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="coupon">
-                        <input type="text" placeholder="Coupon Code">
-                        <button>Apply Code</button>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="cart-summary">
-                        <div class="cart-content">
-                            <h3>Cart Summary</h3>
-                            <p>Sub Total<span>$22</span></p>
-                            <p>Shipping Cost<span>$1 ({{ vat~'%' }})</span></p>
-                            <h4>Grand Total<span>${{ total_incl|number_format(2, ',', ' ') }}</span></h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                {% for line in form.cartLines %}
+                                    {{ form_row(line) }}
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="cart-btn">
-                            <button>Update Cart</button>
-                            <button>Checkout</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="coupon">
+                            <input type="text" placeholder="Coupon Code">
+                            <button>Apply Code</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="cart-summary">
+                            <div class="cart-content">
+                                <h3>Cart Summary</h3>
+                                <p>Sub Total<span>$22</span></p>
+                                <p>Shipping Cost<span>$1 ({{ vat~'%' }})</span></p>
+                                <h4>Grand Total<span>${{ total_incl|number_format(2, ',', ' ') }}</span></h4>
+                            </div>
+                            <div class="cart-btn">
+                                <button>Update Cart</button>
+                                <label><a href="{{ url('cart_checkout') }}">Checkout</a></label>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+            {{ form_end(form) }}
+        {% endif %}
     </div>
+{% endblock %}
+{% block _cart_cartLines_entry_row %}
+    {% set product = value.product %}
+    <tr>
+        <td>
+            <a href="#"><img src="{{ product.coverImage }}" alt="Image"></a>
+        </td>
+        <td><a href="#">{{ product.title }}</a></td>
+        <td>${{ product.price }}</td>
+        <td>
+            <div class="qty">
+                {{ form_row(form) }}
+            </div>
+        </td>
+        <td>${{ value.quantity*product.price }}</td>
+        <td>
+            <button type="button" class="delete-row"><i class="fa fa-trash"></i></button>
+        </td>
+    </tr>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('button.delete-row').on('click', function () {
+                let line = $(this).closest('tr');
+                line.remove();
+            });
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    <style type="text/css">
+        .cart-page .cart-summary .cart-btn label {
+            width: calc(50% - 15px);
+            padding: 10px;
+            text-align: center;
+            background: #3F69AA;
+            border: none;
+        }
+        .cart-page .cart-summary .cart-btn label a {
+            color: #ffffff;
+        }
+    </style>
 {% endblock %}

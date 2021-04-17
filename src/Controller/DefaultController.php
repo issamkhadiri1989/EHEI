@@ -91,7 +91,9 @@ class DefaultController extends AbstractController
      */
     public function sendMail(Mailer $mailer)
     {
+        dump($mailer);
         $mailer->sendMail();
+        dump($mailer);
         die;
     }
 }

@@ -19,6 +19,6 @@ class Mailer
 
     public function sendMail()
     {
-        dd($this->from);
+        dump($this->from);
     }
 }
