@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+<head>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+<script type="text/javascript" src="{{ asset('assets/jquery-3.6.0.min.js') }}"></script>
+</body>
+</html>
