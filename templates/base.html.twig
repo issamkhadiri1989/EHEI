@@ -1,11 +1,14 @@
 <!doctype html>
 <html>
 <head>
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/bootstrap.min.css') }}"/>
     {% block stylesheets %}{% endblock %}
+    <script type="text/javascript" src="{{ asset('assets/jquery-3.6.0.min.js') }}"></script>
     {% block javascripts %}{% endblock %}
 </head>
 <body>
-{% block body %}{% endblock %}
-<script type="text/javascript" src="{{ asset('assets/jquery-3.6.0.min.js') }}"></script>
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
 </body>
 </html>

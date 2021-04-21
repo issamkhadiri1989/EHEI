@@ -1,8 +1,55 @@
+{% form_theme form _self %}
 {% extends 'base.html.twig' %}
 {% block body %}
-<h1>CollectionType</h1>
-    {{ form_start(form)}}
-    {{ form_row(form) }}
-    <button>Continue</button>
+    {{ form_start(form) }}
+    <div class="card">
+        <div class="card-header">
+            <h1>CollectionType</h1>
+        </div>
+        <div class="card-body" id="items" data-length="{{ form.items|length }}">
+            {{ form_row(form.items) }}
+        </div>
+        <div class=card-body>
+            <div></div>
+        </div>
+        <div class="card-footer">
+            <button class="btn-primary btn">Continue</button>
+            <button type="button" id="add-item" class="btn btn-success">Add item</button>
+        </div>
+    </div>
     {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#add-item').on('click', function () {
+                var count = $('#items').data('length');
+                let prototype = $('#order_items').data('prototype');
+                count++;
+                prototype = prototype.replace(/__name__/g, count);
+                $('#items').append(prototype);
+                $('#items').data('length', count);
+            });
+            $('#items').on('click', 'button.delete-line', function () {
+                $(this).closest('div.row')
+                    .remove();
+            });
+        });
+    </script>
+{% endblock %}
+{% block form_row %}
+    <div class="row">
+        <div class="col-12">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
+{% block _order_status_widget %}
+    <input type="number"
+           id="{{ id }}"
+           value="{{ value }}"
+           class="form-control"
+           name="{{ full_name }}"
+            {{ block('widget_attributes') }}
+    />
 {% endblock %}

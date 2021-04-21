@@ -33,6 +33,7 @@ class OrderLineType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Item::class,
+            'label' => false,
         ]);
     }
 }

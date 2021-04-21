@@ -16,9 +16,13 @@ class OrderType extends AbstractType
     {
         $builder
             ->add('items', CollectionType::class, [
+                'label' => false,
                 'entry_type' => OrderLineType::class,
-                'entry_options' => ['label' => false,],
+                'entry_options' => [
+                    'label' => false,
+                ],
                 'allow_add' => true,
+                'allow_delete' => true,
             ]);
     }
 
@@ -26,6 +30,7 @@ class OrderType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Order::class,
+            'label' => false,
         ]);
     }
 }
