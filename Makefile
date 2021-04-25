@@ -45,3 +45,6 @@ shutdown: stop stop-containers
 #list all containers
 ls:
 	docker-compose ps
+
+build:
+	docker-compose build
