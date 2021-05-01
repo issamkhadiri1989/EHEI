@@ -2,6 +2,7 @@ version: "3.4"
 
 services:
     webserver:
+        working_dir: /usr/share/nginx/html
         build:
             context: ./docker/webserver
         container_name: 'ehei_php'
