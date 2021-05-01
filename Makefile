@@ -1,5 +1,6 @@
 PHP = ehei_php
 QA = phpstan
+PHP_VERSION = php7.4
 
 #stop all containers
 stop:
@@ -45,3 +46,14 @@ shutdown: stop stop-containers
 #list all containers
 ls:
 	docker-compose ps
+
+build:
+	docker-compose build
+
+fpm-restart:
+	docker exec -it $(PHP) service $(PHP_VERSION)-fpm restart
+nginx-restart:
+	docker exec -it $(PHP) service nginx restart
+services-restart: fpm-restart nginx-restart
+	docker exec -it $(PHP) service $(PHP_VERSION)-fpm status
+	docker exec -it $(PHP) service nginx status
