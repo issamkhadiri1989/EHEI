@@ -36,8 +36,8 @@
                             <a href="{{ url('product', {slug: product.slug}) }}" target="_blank">
                                 {{ product.title }}
                             </a>
-                        {% if product.featured %}
-                            <label class="badge badge-info">Featured</label>
+                            {% if product.featured %}
+                                <label class="badge badge-info">Featured</label>
                             {% endif %}
                         </td>
                         <td>{{ product.category.category }}</td>
@@ -52,4 +52,33 @@
             </table>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('0feb96eef409285126da', {
+            cluster: 'eu'
+        });
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function (data) {
+            $('#notifications_container').append('<a href="#" class="dropdown-item">\n' +
+                '                        <div class="media">\n' +
+                '                            <img src="https://i.pravatar.cc/128" alt="User Avatar" class="img-size-50 mr-3 img-circle">\n' +
+                '                            <div class="media-body">\n' +
+                '                                <h3 class="dropdown-item-title">\n' +
+                '                                    '+data.name+'\n' +
+                '                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>\n' +
+                '                                </h3>\n' +
+                '                                <p class="text-sm">'+data.message+'</p>\n' +
+                '                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '                    </a>\n' +
+                '                    <div class="dropdown-divider"></div>');
+            $('#comments_count').text(parseInt($('#comments_count').text()) + 1)
+            /*alert(JSON.stringify(data));*/
+        });
+    </script>
 {% endblock %}

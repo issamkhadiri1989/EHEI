@@ -98,20 +98,22 @@
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
                                         </div>
+                                        {{ form_start(contactForm) }}
                                         <div class="row form">
                                             <div class="col-sm-6">
-                                                <input type="text" placeholder="Name">
+                                                {{ form_widget(contactForm.name) }}
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="email" placeholder="Email">
+                                                {{ form_widget(contactForm.email) }}
                                             </div>
                                             <div class="col-sm-12">
-                                                <textarea placeholder="Review"></textarea>
+                                                {{ form_widget(contactForm.message) }}
                                             </div>
                                             <div class="col-sm-12">
                                                 <button>Submit</button>
                                             </div>
                                         </div>
+                                        {{ form_end(contactForm) }}
                                     </div>
                                 </div>
                             </div>
@@ -207,17 +209,17 @@
     </div>
 {% endblock %}
 {% block stylesheets %}
-<style type="text/css">
-    .product-detail .product-content .action button[type=submit] {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        padding: 7px 0;
-        text-align: center;
-        color: #ffffff;
-        font-size: 22px;
-        background: #3F69AA;
-        border: 1px solid #3F69AA;
-    }
-</style>
+    <style type="text/css">
+        .product-detail .product-content .action button[type=submit] {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            padding: 7px 0;
+            text-align: center;
+            color: #ffffff;
+            font-size: 22px;
+            background: #3F69AA;
+            border: 1px solid #3F69AA;
+        }
+    </style>
 {% endblock %}

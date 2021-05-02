@@ -7,8 +7,11 @@ namespace App\Controller;
 use App\Entity\CartLine;
 use App\Entity\Product;
 use App\Form\Type\CartLineType;
+use App\Form\Type\ContactType;
+use App\Model\Contact;
 use App\Repository\ProductRepository;
 use App\Service\Cart;
+use Pusher\Pusher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +42,7 @@ class ProductController extends AbstractController
      *
      * @throws \Exception
      */
-    public function index(Product $product, ProductRepository $repository, Request $request): Response
+    public function index(Product $product, ProductRepository $repository, Request $request, Pusher $pusher): Response
     {
         $products = $repository->findBy([
             'category' => $product->getCategory(),
@@ -57,10 +60,26 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('cart_homepage', [], Response::HTTP_FOUND);
         }
 
+        $contact = new Contact();
+        $contactForm = $this->createForm(ContactType::class, $contact);
+        $contactForm->handleRequest($request);
+        if ($contactForm->isSubmitted() && $contactForm->isValid()) {
+            // ... Pusher
+            $data['name'] = $contact->getName();
+            $data['email'] = $contact->getEmail();
+            $data['message'] = $contact->getMessage();
+
+            $pusher->trigger('my-channel', 'my-event', $data);
+            $this->addFlash('warning', 'Your message has been sent. However, we need to review it before publishing it');
+
+            return $this->redirectToRoute('product', ['slug' => $product->getSlug()]);
+        }
+
         return $this->render('product/index.html.twig', [
             'product' => $product,
             'related' => $products,
             'addToCart' => $form->createView(),
+            'contactForm' => $contactForm->createView(),
         ]);
     }
 
