@@ -53,6 +53,7 @@ class AppFixtures extends Fixture
                     '<p>%s</p>',
                     \implode('</p><p>', $this->faker->paragraphs(10))
                 ))
+                ->setQuantity(\rand(0, 5))
                 ->setCoverImage(\sprintf(
                     'https://picsum.photos/200?random=%d',
                     \rand(1, 99999)

@@ -92,6 +92,11 @@ class Product
     private $zipCode;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $quantity;
+
+    /**
      * @return mixed
      */
     public function getAddress()
@@ -277,5 +282,17 @@ class Product
             \array_fill(0, $this->getVote() ?? self::MAX_VOTES, 1),
             \array_fill($this->getVote() + 1, self::MAX_VOTES - $this->getVote(), 0)
         );
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
     }
 }
