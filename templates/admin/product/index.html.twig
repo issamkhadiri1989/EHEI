@@ -63,7 +63,8 @@
         });
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function (data) {
-            $('#notifications_container').append('<a href="#" class="dropdown-item">\n' +
+            $.LoadComments();
+            $('#notifications_container').append('<a href="'+data.url+'" class="dropdown-item">\n' +
                 '                        <div class="media">\n' +
                 '                            <img src="https://i.pravatar.cc/128" alt="User Avatar" class="img-size-50 mr-3 img-circle">\n' +
                 '                            <div class="media-body">\n' +
@@ -80,5 +81,19 @@
             $('#comments_count').text(parseInt($('#comments_count').text()) + 1)
             /*alert(JSON.stringify(data));*/
         });
+
+    /**
+     * Function that loads comments with ajax
+     */
+    $.LoadComments = function()
+    {
+        //... Call ajax to get all comments + set DOM
+    };
+
+    $(document).ready(function () {
+        // Loading the comments when loading the page first
+        $.LoadComments();
+    });
+
     </script>
 {% endblock %}

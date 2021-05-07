@@ -4,4 +4,4 @@
 
 * Load fixtures: **php bin/console doctrine:fixtures:load**
 
-* 
+* to listen to  the cron jobs:  #docker run -t -i symfony4_ehei_cron 

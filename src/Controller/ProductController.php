@@ -11,7 +11,9 @@ use App\Form\Type\ContactType;
 use App\Model\Contact;
 use App\Repository\ProductRepository;
 use App\Service\Cart;
+use Pusher\ApiErrorException;
 use Pusher\Pusher;
+use Pusher\PusherException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,10 +39,12 @@ class ProductController extends AbstractController
      * @param Product           $product
      * @param ProductRepository $repository
      * @param Request           $request
+     * @param Pusher            $pusher
      *
      * @return Response
      *
-     * @throws \Exception
+     * @throws ApiErrorException
+     * @throws PusherException
      */
     public function index(Product $product, ProductRepository $repository, Request $request, Pusher $pusher): Response
     {
@@ -68,9 +72,14 @@ class ProductController extends AbstractController
             $data['name'] = $contact->getName();
             $data['email'] = $contact->getEmail();
             $data['message'] = $contact->getMessage();
-
+            $data['url'] = $this->generateUrl('admin_product_edit', ['id' => $product->getId()]);
+            // ... save to database
+            $data['success'] = false;
             $pusher->trigger('my-channel', 'my-event', $data);
-            $this->addFlash('warning', 'Your message has been sent. However, we need to review it before publishing it');
+            $this->addFlash(
+                'warning',
+                'Your message has been sent. However, we need to review it before publishing it'
+            );
 
             return $this->redirectToRoute('product', ['slug' => $product->getSlug()]);
         }
