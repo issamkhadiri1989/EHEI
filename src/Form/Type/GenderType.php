@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Type;
 
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +14,10 @@ class GenderType extends AbstractType
     {
         $resolver->setDefaults([
             'placeholder' => '',
-            'choices' => User::GENDERS,
+            'choices' => [
+                'Mister' => 'mr',
+                'Miss' => 'mme',
+            ],
         ]);
     }
 
