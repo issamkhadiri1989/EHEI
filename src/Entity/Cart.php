@@ -6,6 +6,7 @@ use App\Repository\CartRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CartRepository::class)
@@ -37,6 +38,7 @@ class Cart
     private $status;
 
     /**
+     * @Assert\Valid()
      * @var mixed
      * @ORM\OneToMany(targetEntity=CartLine::class, mappedBy="cart", orphanRemoval=true)
      */

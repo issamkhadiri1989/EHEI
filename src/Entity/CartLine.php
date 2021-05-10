@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\CartLineRepository;
+use App\Validator\Quantity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass=CartLineRepository::class)
  */
 class CartLine
@@ -19,6 +22,9 @@ class CartLine
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Quantity()
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -77,5 +83,16 @@ class CartLine
         $this->product = $product;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function reduceQuantity()
+    {
+        if ($this->getProduct()->getQuantity() > $this->getQuantity())  {
+            $this->getProduct()
+                ->setQuantity($this->getProduct()->getQuantity() - $this->getQuantity());
+        }
     }
 }
