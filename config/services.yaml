@@ -42,3 +42,6 @@ services:
         ## factory with  a static function ##
         #factory: ['App\Factory\MailerFactory', 'alertAdmins']
 
+    App\EventListener\OrderListener:
+        tags:
+            - {event: !php/const App\Event\OrderPlaced::NAME, name: kernel.event_listener}

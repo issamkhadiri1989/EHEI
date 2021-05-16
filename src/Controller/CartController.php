@@ -6,12 +6,14 @@ namespace App\Controller;
 
 use App\Entity\CartLine;
 use App\Entity\Product as ProductEntity;
+use App\Event\OrderPlaced;
 use App\Form\Type\CartType;
 use App\Form\Type\CheckoutType;
 use App\Repository\ProductRepository;
 use App\Service\Cart;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -106,7 +108,7 @@ class CartController extends AbstractController
      *
      * @return Response the response
      */
-    public function checkout(Request $request, ProductRepository $repository, EntityManagerInterface $manager)
+    public function checkout(Request $request, ProductRepository $repository, EntityManagerInterface $manager, EventDispatcherInterface $dispatcher)
     {
         if ($this->cartService->isCartEmpty()) {
             throw new AccessDeniedHttpException(self::OPERATION_NOT_ALLOWED);
@@ -126,6 +128,8 @@ class CartController extends AbstractController
             $manager->flush();
             $this->cartService->clearCart();
             $this->addFlash('success', self::CART_CHECKED_OUT);
+            $event = new OrderPlaced($cart);
+            $dispatcher->dispatch($event, OrderPlaced::NAME);
 
             return $this->redirectToRoute('homepage');
         }
